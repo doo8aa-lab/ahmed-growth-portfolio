@@ -205,6 +205,79 @@ p{margin:0;color:var(--muted)}
 .footer-grid{border-top:1px solid var(--line);padding-top:24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .footer strong{color:var(--text)}
 .footer-links{display:flex;gap:18px;flex-wrap:wrap}
+.whatsapp-widget{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:60;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-height:48px;
+  padding:10px 16px 10px 10px;
+  border:1px solid rgba(85,217,139,.34);
+  border-radius:999px;
+  color:#eafff4;
+  background:linear-gradient(135deg,rgba(7,18,33,.94),rgba(8,32,25,.9));
+  box-shadow:0 18px 45px rgba(0,0,0,.34),0 0 0 1px rgba(255,255,255,.04) inset;
+  font-weight:800;
+  font-size:14px;
+  letter-spacing:0;
+  backdrop-filter:blur(16px);
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease;
+}
+.whatsapp-widget:hover{
+  transform:translateY(-3px);
+  border-color:rgba(85,217,139,.62);
+  box-shadow:0 22px 55px rgba(0,0,0,.42),0 0 0 1px rgba(85,217,139,.12) inset;
+}
+.whatsapp-widget:focus-visible{
+  outline:2px solid rgba(85,217,139,.78);
+  outline-offset:4px;
+}
+.whatsapp-widget-icon{
+  display:grid;
+  place-items:center;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  color:#07121f;
+  background:var(--success);
+  font-family:Sora,Manrope,sans-serif;
+  font-size:11px;
+  font-weight:900;
+}
+@media (max-width:640px){
+  .whatsapp-widget{
+    right:14px;
+    bottom:16px;
+    width:46px;
+    height:46px;
+    min-height:46px;
+    max-width:46px;
+    padding:8px;
+    justify-content:center;
+    gap:0;
+    font-size:0;
+  }
+  .whatsapp-widget.whatsapp-widget--top{
+    top:92px;
+    bottom:auto;
+  }
+  .whatsapp-widget span:last-child{
+    position:absolute;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    white-space:nowrap;
+  }
+  .whatsapp-widget-icon{
+    width:30px;
+    height:30px;
+    font-size:10px;
+  }
+}
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.82);z-index:120;padding:20px}
 .modal.open{display:flex}
 .modal-content{position:relative;max-width:min(1200px,96vw);max-height:90vh}

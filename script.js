@@ -57,6 +57,38 @@ document.addEventListener('keydown', e => {
 });
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const whatsappWidget = document.querySelector('.whatsapp-widget');
+const mobileWidgetQuery = window.matchMedia('(max-width: 640px)');
+if(whatsappWidget){
+  let widgetFrame = null;
+  const widgetTargets = '.btn,.nav-cta,.mobile-cta,.footer-links a,a[href^="mailto:"],a[href*="wa.me"]';
+  const intersects = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  const updateWhatsAppWidgetPosition = () => {
+    widgetFrame = null;
+    if(!mobileWidgetQuery.matches){
+      whatsappWidget.classList.remove('whatsapp-widget--top');
+      return;
+    }
+    whatsappWidget.classList.remove('whatsapp-widget--top');
+    const widgetRect = whatsappWidget.getBoundingClientRect();
+    const collides = Array.from(document.querySelectorAll(widgetTargets)).some(el => {
+      if(el === whatsappWidget || whatsappWidget.contains(el)) return false;
+      const styles = window.getComputedStyle(el);
+      if(styles.display === 'none' || styles.visibility === 'hidden') return false;
+      const rect = el.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0 && intersects(widgetRect, rect);
+    });
+    if(collides) whatsappWidget.classList.add('whatsapp-widget--top');
+  };
+  const scheduleWhatsAppWidgetPosition = () => {
+    if(widgetFrame) return;
+    widgetFrame = window.requestAnimationFrame(updateWhatsAppWidgetPosition);
+  };
+  window.addEventListener('scroll', scheduleWhatsAppWidgetPosition, {passive:true});
+  window.addEventListener('resize', scheduleWhatsAppWidgetPosition);
+  mobileWidgetQuery.addEventListener?.('change', scheduleWhatsAppWidgetPosition);
+  window.setTimeout(scheduleWhatsAppWidgetPosition, 80);
+}
 const reveals = document.querySelectorAll('section, .card, .hero-panel, .proof, .timeline-item, .callout, .cta-box, .highlight-panel');
 reveals.forEach((el, index) => {
   el.classList.add('reveal');
